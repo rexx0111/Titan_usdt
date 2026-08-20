@@ -1,0 +1,2984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>TITAN USDT — Digital Asset Portal</title>
+
+<meta name="description"
+content="Titan USDT digital asset client portal.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* =========================================================
+   TITAN USDT — PREMIUM DARK / GLOBAL THEME
+========================================================= */
+
+:root{
+    --gold:#d6a746;
+    --gold2:#f4d47b;
+    --gold3:#8b621d;
+
+    --black:#020304;
+    --black2:#06080b;
+    --panel:rgba(10,13,17,.76);
+
+    --white:#f6f5ef;
+    --muted:#92979f;
+    --muted2:#626870;
+
+    --line:rgba(255,255,255,.075);
+    --gold-line:rgba(214,167,70,.20);
+
+    --green:#63e49a;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#020304;
+    color:var(--white);
+    font-family:"Inter",Arial,sans-serif;
+    overflow-x:hidden;
+}
+
+button,
+input,
+textarea{
+    font-family:inherit;
+}
+
+/* =========================================================
+   BACKGROUND FX
+========================================================= */
+
+.noise{
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    pointer-events:none;
+    opacity:.025;
+
+    background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.grid{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:-1;
+
+    background-image:
+        linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
+
+    background-size:80px 80px;
+
+    mask-image:
+        linear-gradient(
+            to bottom,
+            black,
+            transparent 75%
+        );
+}
+
+.glow{
+    position:fixed;
+    width:500px;
+    height:500px;
+    border-radius:50%;
+    pointer-events:none;
+    filter:blur(90px);
+    opacity:.13;
+    z-index:-2;
+
+    background:#c89432;
+}
+
+.glow.one{
+    left:-280px;
+    top:20%;
+}
+
+.glow.two{
+    right:-300px;
+    top:55%;
+}
+
+.scanline{
+    position:fixed;
+    left:0;
+    width:100%;
+    height:1px;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(235,190,89,.25),
+        transparent
+    );
+    opacity:.3;
+    pointer-events:none;
+    z-index:50;
+
+    animation:scan 8s linear infinite;
+}
+
+@keyframes scan{
+    0%{
+        top:-5%;
+    }
+    100%{
+        top:105%;
+    }
+}
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.navbar{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    z-index:1000;
+
+    background:
+        rgba(2,3,4,.68);
+
+    backdrop-filter:blur(24px);
+    -webkit-backdrop-filter:blur(24px);
+
+    border-bottom:1px solid rgba(255,255,255,.055);
+}
+
+.nav{
+    max-width:1320px;
+    min-height:78px;
+    margin:auto;
+    padding:0 28px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+/* BRAND */
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:13px;
+}
+
+.brand-mark{
+    width:38px;
+    height:38px;
+
+    display:grid;
+    place-items:center;
+
+    border-radius:10px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #f6d77e,
+            #8b5c16
+        );
+
+    color:#090704;
+
+    font-family:"Space Grotesk";
+    font-size:18px;
+    font-weight:800;
+
+    box-shadow:
+        0 0 25px rgba(214,167,70,.15);
+
+    transform:skew(-5deg);
+}
+
+.brand-main{
+    font-family:"Space Grotesk";
+    font-size:17px;
+    font-weight:700;
+    letter-spacing:1.8px;
+}
+
+.brand-main span{
+    color:var(--gold2);
+}
+
+.brand-sub{
+    margin-top:2px;
+    font-size:7px;
+    letter-spacing:2px;
+    color:#666b72;
+}
+
+.nav-links{
+    display:flex;
+    align-items:center;
+    gap:30px;
+}
+
+.nav-links a{
+    color:#858b93;
+    text-decoration:none;
+    font-size:11px;
+    transition:.25s;
+}
+
+.nav-links a:hover{
+    color:#fff;
+}
+
+.support-btn{
+    text-decoration:none;
+
+    padding:10px 15px;
+
+    border:1px solid var(--gold-line);
+    border-radius:8px;
+
+    color:#e7c774;
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:.5px;
+
+    background:rgba(214,167,70,.035);
+
+    transition:.3s;
+}
+
+.support-btn:hover{
+    background:rgba(214,167,70,.10);
+    transform:translateY(-2px);
+}
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+.container{
+    width:min(1280px,calc(100% - 40px));
+    margin:auto;
+}
+
+main{
+    position:relative;
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+    min-height:100vh;
+    position:relative;
+
+    display:grid;
+    grid-template-columns:1.05fr .95fr;
+    align-items:center;
+
+    gap:60px;
+
+    padding-top:100px;
+
+    isolation:isolate;
+}
+
+/* EARTH BACKGROUND */
+
+.hero::before{
+    content:"";
+    position:absolute;
+
+    inset:0;
+
+    z-index:-3;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(2,3,4,.98) 0%,
+            rgba(2,3,4,.88) 32%,
+            rgba(2,3,4,.58) 65%,
+            rgba(2,3,4,.74) 100%
+        ),
+        linear-gradient(
+            0deg,
+            rgba(2,3,4,1) 0%,
+            transparent 35%,
+            rgba(2,3,4,.20) 100%
+        ),
+        url("earth-bg.jpeg");
+
+    background-size:cover;
+    background-position:center;
+
+    transform:scale(1.03);
+
+    animation:
+        earthDrift 18s ease-in-out infinite alternate;
+}
+
+@keyframes earthDrift{
+    from{
+        transform:scale(1.03) translate3d(0,0,0);
+    }
+
+    to{
+        transform:scale(1.09) translate3d(-10px,-5px,0);
+    }
+}
+
+.hero::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:-2;
+
+    background:
+        radial-gradient(
+            circle at 70% 42%,
+            rgba(220,170,72,.14),
+            transparent 30%
+        );
+
+    pointer-events:none;
+}
+
+/* HERO CONTENT */
+
+.hero-content{
+    animation:
+        heroIn 1s cubic-bezier(.2,.8,.2,1);
+}
+
+@keyframes heroIn{
+    from{
+        opacity:0;
+        transform:translateY(35px);
+    }
+
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
+.eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+
+    padding:8px 12px;
+
+    border-radius:50px;
+
+    border:1px solid rgba(214,167,70,.20);
+
+    background:rgba(214,167,70,.045);
+
+    color:#d5b564;
+
+    font-size:8px;
+    font-weight:800;
+    letter-spacing:2.2px;
+}
+
+.live{
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:var(--green);
+
+    box-shadow:
+        0 0 12px var(--green);
+
+    animation:pulse 1.6s infinite;
+}
+
+@keyframes pulse{
+    50%{
+        opacity:.3;
+        transform:scale(.65);
+    }
+}
+
+/* MAIN TITAN TEXT */
+
+.hero-title{
+    margin-top:28px;
+
+    font-family:"Space Grotesk";
+
+    font-size:
+        clamp(65px,9vw,125px);
+
+    line-height:.80;
+
+    letter-spacing:-7px;
+
+    font-weight:700;
+
+    color:#fff;
+
+    position:relative;
+}
+
+.hero-title .titan{
+    display:block;
+
+    background:
+        linear-gradient(
+            105deg,
+            #755018 0%,
+            #f8dc88 34%,
+            #fff5c8 48%,
+            #c7922f 70%,
+            #68430e 100%
+        );
+
+    -webkit-background-clip:text;
+    background-clip:text;
+
+    color:transparent;
+
+    text-shadow:
+        0 10px 50px rgba(214,167,70,.08);
+}
+
+.hero-title .usdt{
+    display:block;
+
+    margin-top:10px;
+
+    color:#f5f5f2;
+
+    font-size:.42em;
+
+    letter-spacing:12px;
+
+    line-height:1;
+}
+
+.hero-line{
+    width:90px;
+    height:2px;
+
+    margin:28px 0 20px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--gold),
+            transparent
+        );
+}
+
+.hero h2{
+    font-family:"Space Grotesk";
+
+    font-size:23px;
+    font-weight:500;
+
+    color:#e6c76f;
+
+    margin-bottom:16px;
+}
+
+.hero-copy{
+    max-width:560px;
+
+    color:#91969e;
+
+    font-size:13px;
+    line-height:1.85;
+}
+
+.hero-copy strong{
+    color:#d8dbe0;
+    font-weight:600;
+}
+
+/* HERO BUTTONS */
+
+.hero-actions{
+    display:flex;
+    gap:11px;
+    flex-wrap:wrap;
+
+    margin-top:30px;
+}
+
+.primary{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:14px 21px;
+
+    border-radius:9px;
+
+    text-decoration:none;
+
+    color:#080704;
+
+    font-size:10px;
+    font-weight:900;
+    letter-spacing:.7px;
+
+    background:
+        linear-gradient(
+            110deg,
+            #f2ce6b,
+            #b47720
+        );
+
+    box-shadow:
+        0 12px 40px rgba(214,167,70,.13);
+
+    transition:.3s;
+}
+
+.primary:hover{
+    transform:translateY(-3px);
+    box-shadow:
+        0 18px 50px rgba(214,167,70,.20);
+}
+
+.secondary{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:14px 21px;
+
+    border:1px solid rgba(255,255,255,.11);
+
+    border-radius:9px;
+
+    background:rgba(255,255,255,.025);
+
+    color:#c2c5c9;
+
+    text-decoration:none;
+
+    font-size:10px;
+
+    transition:.3s;
+}
+
+.secondary:hover{
+    background:rgba(255,255,255,.06);
+    border-color:rgba(255,255,255,.18);
+}
+
+/* =========================================================
+   HERO SIDE PANEL
+========================================================= */
+
+.hero-panel{
+    position:relative;
+
+    padding:1px;
+
+    border-radius:22px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(240,196,93,.35),
+            rgba(255,255,255,.05),
+            rgba(240,196,93,.08)
+        );
+
+    box-shadow:
+        0 30px 100px rgba(0,0,0,.5);
+
+    animation:
+        panelFloat 6s ease-in-out infinite;
+}
+
+@keyframes panelFloat{
+    50%{
+        transform:translateY(-9px);
+    }
+}
+
+.hero-panel-inner{
+    min-height:430px;
+
+    padding:30px;
+
+    border-radius:21px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(8,11,14,.88),
+            rgba(3,5,7,.74)
+        );
+
+    backdrop-filter:blur(18px);
+
+    position:relative;
+    overflow:hidden;
+}
+
+.hero-panel-inner::before{
+    content:"";
+
+    position:absolute;
+
+    width:220px;
+    height:220px;
+
+    right:-90px;
+    top:-90px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(216,167,69,.22),
+            transparent 70%
+        );
+}
+
+.panel-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:30px;
+}
+
+.panel-status{
+    display:flex;
+    align-items:center;
+    gap:7px;
+
+    color:#7fd89b;
+
+    font-size:8px;
+    letter-spacing:1.5px;
+    font-weight:700;
+}
+
+.status-dot{
+    width:5px;
+    height:5px;
+    border-radius:50%;
+    background:#65dc90;
+    box-shadow:0 0 10px #65dc90;
+}
+
+.panel-code{
+    color:#575d64;
+    font-size:8px;
+    letter-spacing:1px;
+}
+
+.panel-title{
+    font-family:"Space Grotesk";
+    font-size:28px;
+    line-height:1.1;
+    font-weight:600;
+
+    max-width:300px;
+}
+
+.panel-title span{
+    color:#e3bd62;
+}
+
+.panel-description{
+    color:#737980;
+    font-size:11px;
+    line-height:1.75;
+    margin-top:13px;
+}
+
+.metric{
+    margin-top:35px;
+
+    padding:16px;
+
+    border:1px solid rgba(255,255,255,.06);
+
+    border-radius:11px;
+
+    background:rgba(255,255,255,.018);
+}
+
+.metric-label{
+    color:#696f76;
+    font-size:8px;
+    letter-spacing:1.5px;
+}
+
+.metric-row{
+    display:flex;
+    align-items:end;
+    justify-content:space-between;
+
+    margin-top:8px;
+}
+
+.metric-value{
+    font-family:"Space Grotesk";
+    font-size:25px;
+    color:#eee;
+}
+
+.metric-tag{
+    color:#d8ba67;
+    font-size:8px;
+}
+
+.panel-lines{
+    margin-top:18px;
+}
+
+.panel-line{
+    display:flex;
+    justify-content:space-between;
+
+    padding:10px 0;
+
+    border-bottom:1px solid rgba(255,255,255,.045);
+
+    font-size:9px;
+}
+
+.panel-line:last-child{
+    border-bottom:0;
+}
+
+.panel-line span:first-child{
+    color:#666c73;
+}
+
+.panel-line span:last-child{
+    color:#d4d7da;
+    font-weight:600;
+}
+
+/* =========================================================
+   TRUST BAR
+========================================================= */
+
+.trust-strip{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+
+    border:1px solid var(--line);
+    border-radius:14px;
+
+    overflow:hidden;
+
+    background:rgba(7,9,11,.72);
+
+    backdrop-filter:blur(15px);
+}
+
+.trust{
+    padding:20px;
+
+    border-right:1px solid rgba(255,255,255,.055);
+}
+
+.trust:last-child{
+    border-right:0;
+}
+
+.trust-label{
+    color:#666c73;
+    font-size:7px;
+    letter-spacing:1.7px;
+}
+
+.trust-value{
+    margin-top:7px;
+
+    color:#ddd;
+    font-size:11px;
+    font-weight:700;
+}
+
+.trust-value span{
+    color:#cba34e;
+}
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.section{
+    padding-top:105px;
+}
+
+.section-heading{
+    text-align:center;
+    max-width:650px;
+    margin:0 auto 38px;
+}
+
+.section-heading small{
+    color:#c3983d;
+    font-size:8px;
+    letter-spacing:2.5px;
+    font-weight:800;
+}
+
+.section-heading h2{
+    margin-top:12px;
+
+    font-family:"Space Grotesk";
+
+    font-size:
+        clamp(30px,4vw,46px);
+
+    letter-spacing:-1.5px;
+}
+
+.section-heading p{
+    margin-top:12px;
+
+    color:#71767d;
+
+    font-size:11px;
+    line-height:1.7;
+}
+
+/* =========================================================
+   PORTAL
+========================================================= */
+
+.portal{
+    margin-top:80px;
+
+    border:1px solid rgba(214,167,70,.17);
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(16,19,23,.87),
+            rgba(4,6,8,.93)
+        );
+
+    box-shadow:
+        0 40px 120px rgba(0,0,0,.40);
+
+    backdrop-filter:blur(18px);
+}
+
+.portal-header{
+    padding:22px 26px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    border-bottom:1px solid var(--line);
+}
+
+.portal-heading{
+    font-family:"Space Grotesk";
+    font-size:15px;
+}
+
+.portal-heading span{
+    color:#d5b15b;
+}
+
+.portal-caption{
+    color:#656a71;
+    font-size:8px;
+    letter-spacing:1px;
+}
+
+.portal-tabs{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+
+    border-bottom:1px solid var(--line);
+}
+
+.portal-tab{
+    padding:18px;
+
+    border:0;
+
+    background:#090b0e;
+
+    color:#777d84;
+
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:.8px;
+
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+.portal-tab.active{
+    color:#080704;
+
+    background:
+        linear-gradient(
+            110deg,
+            #f1ce70,
+            #aa711c
+        );
+}
+
+/* =========================================================
+   PORTAL GRID
+========================================================= */
+
+.portal-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+}
+
+.portal-panel{
+    padding:30px;
+
+    border-right:1px solid rgba(214,167,70,.10);
+}
+
+.portal-panel:last-child{
+    border-right:0;
+}
+
+.panel-label{
+    color:#c7a453;
+
+    font-size:8px;
+    letter-spacing:1.8px;
+    font-weight:800;
+
+    margin-bottom:13px;
+}
+
+/* =========================================================
+   METHODS
+========================================================= */
+
+.methods{
+    display:flex;
+    gap:7px;
+    flex-wrap:wrap;
+    margin-bottom:24px;
+}
+
+.method{
+    flex:1;
+    min-width:75px;
+
+    padding:11px 10px;
+
+    border:1px solid #292d32;
+
+    border-radius:8px;
+
+    background:#080a0c;
+
+    color:#777d84;
+
+    font-size:9px;
+    font-weight:800;
+
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+.method:hover{
+    border-color:#87621f;
+}
+
+.method.active{
+    color:#e8ca73;
+
+    border-color:#bd8c31;
+
+    background:rgba(214,167,70,.065);
+}
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.field{
+    margin-bottom:15px;
+}
+
+.field label{
+    display:block;
+
+    margin-bottom:7px;
+
+    color:#a1a6ad;
+
+    font-size:9px;
+}
+
+.field input,
+.field textarea{
+    width:100%;
+
+    padding:13px;
+
+    border:1px solid #292e33;
+
+    border-radius:8px;
+
+    background:#050709;
+
+    color:#fff;
+
+    outline:none;
+
+    font-size:10px;
+
+    transition:.25s;
+}
+
+.field input::placeholder,
+.field textarea::placeholder{
+    color:#4e5359;
+}
+
+.field input:focus,
+.field textarea:focus{
+    border-color:#a47727;
+
+    box-shadow:
+        0 0 0 3px rgba(214,167,70,.035);
+}
+
+.field textarea{
+    min-height:75px;
+    resize:vertical;
+}
+
+/* =========================================================
+   DETAILS
+========================================================= */
+
+.details{
+    padding:15px;
+
+    margin-bottom:15px;
+
+    border:1px solid rgba(214,167,70,.14);
+
+    border-radius:10px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(214,167,70,.045),
+            rgba(255,255,255,.012)
+        );
+}
+
+.detail{
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+
+    padding:10px 0;
+
+    border-bottom:1px solid rgba(255,255,255,.045);
+
+    font-size:9px;
+}
+
+.detail:last-child{
+    border-bottom:0;
+}
+
+.detail-label{
+    color:#656b72;
+}
+
+.detail-value{
+    color:#dedfdd;
+    font-weight:700;
+    text-align:right;
+    word-break:break-all;
+}
+
+.copy{
+    margin-top:9px;
+
+    padding:8px 11px;
+
+    border:0;
+    border-radius:6px;
+
+    background:#b77e21;
+
+    color:#080705;
+
+    font-size:8px;
+    font-weight:900;
+
+    cursor:pointer;
+}
+
+/* =========================================================
+   NOTICE / SUBMIT
+========================================================= */
+
+.notice{
+    padding:11px;
+
+    border:1px solid rgba(214,167,70,.11);
+
+    border-radius:8px;
+
+    background:rgba(214,167,70,.025);
+
+    color:#958157;
+
+    font-size:8px;
+    line-height:1.65;
+}
+
+.submit{
+    width:100%;
+
+    margin-top:12px;
+
+    padding:14px;
+
+    border:0;
+    border-radius:8px;
+
+    background:
+        linear-gradient(
+            110deg,
+            #f0ca68,
+            #a66d15
+        );
+
+    color:#080705;
+
+    font-size:9px;
+    font-weight:900;
+    letter-spacing:.6px;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.submit:hover{
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 15px 35px rgba(214,167,70,.15);
+}
+
+.submit:disabled{
+    opacity:.55;
+}
+
+.success,
+.error{
+    display:none;
+
+    margin-top:10px;
+
+    padding:10px;
+
+    border-radius:7px;
+
+    font-size:8px;
+}
+
+.success{
+    color:#6de09a;
+    background:#07170d;
+    border:1px solid #1d4f31;
+}
+
+.error{
+    color:#ffaaa3;
+    background:#200c0b;
+    border:1px solid #5c2722;
+}
+
+/* =========================================================
+   PROCESS CARDS
+========================================================= */
+
+.steps{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
+}
+
+.step{
+    position:relative;
+
+    padding:28px;
+
+    min-height:200px;
+
+    border:1px solid rgba(255,255,255,.065);
+
+    border-radius:14px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.035),
+            rgba(255,255,255,.008)
+        );
+
+    overflow:hidden;
+
+    transition:.35s;
+}
+
+.step::after{
+    content:"";
+
+    position:absolute;
+
+    width:130px;
+    height:130px;
+
+    right:-70px;
+    bottom:-70px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(214,167,70,.13),
+            transparent 70%
+        );
+}
+
+.step:hover{
+    transform:translateY(-6px);
+
+    border-color:rgba(214,167,70,.22);
+}
+
+.step-number{
+    color:#b58932;
+
+    font-size:8px;
+    letter-spacing:2px;
+    font-weight:800;
+}
+
+.step h3{
+    margin-top:17px;
+
+    font-family:"Space Grotesk";
+
+    font-size:19px;
+}
+
+.step p{
+    margin-top:10px;
+
+    color:#70767d;
+
+    font-size:10px;
+    line-height:1.8;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer{
+    margin-top:110px;
+
+    border-top:1px solid var(--line);
+
+    padding:35px 0;
+}
+
+.footer{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    gap:20px;
+}
+
+.footer-brand{
+    font-family:"Space Grotesk";
+
+    color:#e4c36d;
+
+    font-size:14px;
+    letter-spacing:1.5px;
+}
+
+.footer-text{
+    margin-top:5px;
+
+    color:#5e646b;
+
+    font-size:8px;
+}
+
+.footer-copy{
+    color:#555b62;
+
+    font-size:8px;
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:950px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .hero{
+        grid-template-columns:1fr;
+        text-align:center;
+
+        padding-top:130px;
+    }
+
+    .hero-copy{
+        margin:auto;
+    }
+
+    .hero-actions{
+        justify-content:center;
+    }
+
+    .hero-line{
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+    .hero-panel{
+        width:min(560px,100%);
+        margin:auto;
+    }
+
+    .trust-strip{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .portal-grid{
+        grid-template-columns:1fr;
+    }
+
+    .portal-panel{
+        border-right:0;
+        border-bottom:1px solid rgba(214,167,70,.10);
+    }
+
+    .steps{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:600px){
+
+    .container{
+        width:calc(100% - 26px);
+    }
+
+    .nav{
+        padding:0 13px;
+    }
+
+    .brand-sub{
+        display:none;
+    }
+
+    .support-btn{
+        padding:8px 10px;
+        font-size:8px;
+    }
+
+    .hero-title{
+        font-size:61px;
+        letter-spacing:-4px;
+    }
+
+    .hero-title .usdt{
+        letter-spacing:8px;
+    }
+
+    .hero h2{
+        font-size:18px;
+    }
+
+    .hero-copy{
+        font-size:12px;
+    }
+
+    .hero-panel-inner{
+        padding:22px;
+    }
+
+    .panel-title{
+        font-size:24px;
+    }
+
+    .trust-strip{
+        grid-template-columns:1fr;
+    }
+
+    .trust{
+        border-right:0;
+        border-bottom:1px solid rgba(255,255,255,.05);
+    }
+
+    .trust:last-child{
+        border-bottom:0;
+    }
+
+    .portal{
+        margin-top:55px;
+    }
+
+    .portal-header{
+        padding:18px;
+    }
+
+    .portal-panel{
+        padding:18px;
+    }
+
+    .detail{
+        flex-direction:column;
+    }
+
+    .detail-value{
+        text-align:left;
+    }
+
+    .footer{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="noise"></div>
+<div class="grid"></div>
+
+<div class="glow one"></div>
+<div class="glow two"></div>
+
+<div class="scanline"></div>
+
+
+<!-- ======================================================
+     NAVBAR
+====================================================== -->
+
+<header class="navbar">
+
+<div class="nav">
+
+<div class="brand">
+
+<div class="brand-mark">
+T
+</div>
+
+<div>
+
+<div class="brand-main">
+TITAN <span>USDT</span>
+</div>
+
+<div class="brand-sub">
+DIGITAL ASSET SERVICES
+</div>
+
+</div>
+
+</div>
+
+
+<nav class="nav-links">
+
+<a href="#portal">
+Portal
+</a>
+
+<a href="#process">
+Process
+</a>
+
+<a href="#contact">
+Contact
+</a>
+
+</nav>
+
+
+<a
+href="#contact"
+class="support-btn"
+id="topSupport">
+
+SUPPORT ↗
+
+</a>
+
+</div>
+
+</header>
+
+
+<main>
+
+
+<!-- ======================================================
+     HERO
+====================================================== -->
+
+<section class="hero container">
+
+
+<div class="hero-content">
+
+<div class="eyebrow">
+
+<span class="live"></span>
+
+DIGITAL ASSET CLIENT PORTAL
+
+</div>
+
+
+<div class="hero-title">
+
+<span class="titan">
+TITAN
+</span>
+
+<span class="usdt">
+USDT
+</span>
+
+</div>
+
+
+<div class="hero-line"></div>
+
+
+<h2>
+Digital Asset Transaction Infrastructure
+</h2>
+
+
+<p class="hero-copy">
+
+A streamlined interface for submitting
+<strong>INR and digital-asset transaction information</strong>.
+Built with a clean, structured experience for
+desktop and mobile environments.
+
+</p>
+
+
+<div class="hero-actions">
+
+<a
+href="#portal"
+class="primary">
+
+OPEN TRANSACTION PORTAL
+</a>
+
+
+<a
+href="#process"
+class="secondary">
+
+EXPLORE PROCESS
+</a>
+
+</div>
+
+</div>
+
+
+<!-- ======================================================
+     HERO INFORMATION PANEL
+====================================================== -->
+
+<div class="hero-panel">
+
+<div class="hero-panel-inner">
+
+<div class="panel-top">
+
+<div class="panel-status">
+
+<span class="status-dot"></span>
+
+PORTAL AVAILABLE
+
+</div>
+
+<div class="panel-code">
+TITAN / 2026
+</div>
+
+</div>
+
+
+<div class="panel-title">
+
+Global access.
+<br>
+
+<span>Structured transactions.</span>
+
+</div>
+
+
+<p class="panel-description">
+
+Submit transaction information through
+a unified digital interface designed around
+clarity and simplicity.
+
+</p>
+
+
+<div class="metric">
+
+<div class="metric-label">
+PORTAL STATUS
+</div>
+
+<div class="metric-row">
+
+<div class="metric-value">
+ACTIVE
+</div>
+
+<div class="metric-tag">
+● ONLINE
+</div>
+
+</div>
+
+</div>
+
+
+<div class="panel-lines">
+
+<div class="panel-line">
+
+<span>Settlement Interface</span>
+
+<span>INR + USDT</span>
+
+</div>
+
+
+<div class="panel-line">
+
+<span>Access</span>
+
+<span>Desktop / Mobile</span>
+
+</div>
+
+
+<div class="panel-line">
+
+<span>Transaction Flow</span>
+
+<span>Structured</span>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ======================================================
+     TRUST / STATUS STRIP
+====================================================== -->
+
+<section class="container">
+
+<div class="trust-strip">
+
+<div class="trust">
+
+<div class="trust-label">
+PLATFORM
+</div>
+
+<div class="trust-value">
+Titan <span>USDT</span>
+</div>
+
+</div>
+
+
+<div class="trust">
+
+<div class="trust-label">
+TRANSACTION
+</div>
+
+<div class="trust-value">
+INR + Digital Assets
+</div>
+
+</div>
+
+
+<div class="trust">
+
+<div class="trust-label">
+NETWORKS
+</div>
+
+<div class="trust-value">
+TRC20 / ERC20 / BEP20
+</div>
+
+</div>
+
+
+<div class="trust">
+
+<div class="trust-label">
+INTERFACE
+</div>
+
+<div class="trust-value">
+24/7 Client Access
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ======================================================
+     TRANSACTION PORTAL
+====================================================== -->
+
+<section
+class="container"
+id="portal">
+
+<div class="portal">
+
+
+<div class="portal-header">
+
+<div>
+
+<div class="portal-heading">
+Transaction <span>Portal</span>
+</div>
+
+<div class="portal-caption">
+CLIENT SUBMISSION INTERFACE
+</div>
+
+</div>
+
+<div class="panel-code">
+SECURE FORM
+</div>
+
+</div>
+
+
+<div class="portal-tabs">
+
+<button
+class="portal-tab active"
+id="inrTab"
+onclick="openTab('inr')">
+
+₹ &nbsp; INR TRANSACTION
+
+</button>
+
+
+<button
+class="portal-tab"
+id="cryptoTab"
+onclick="openTab('crypto')">
+
+₮ &nbsp; CRYPTO TRANSACTION
+
+</button>
+
+</div>
+
+
+<div class="portal-grid">
+
+
+<!-- ==================================================
+     INR PANEL
+================================================== -->
+
+<div
+class="portal-panel"
+id="inrPanel">
+
+<form
+action="https://formspree.io/f/xwleanev"
+method="POST"
+class="deposit-form">
+
+
+<input
+type="hidden"
+name="_subject"
+value="Titan USDT — INR Submission">
+
+
+<input
+type="hidden"
+name="deposit_type"
+value="INR">
+
+
+<input
+type="hidden"
+name="payment_method"
+id="paymentMethod"
+value="UPI">
+
+
+<div class="panel-label">
+01 / PAYMENT METHOD
+</div>
+
+
+<div class="methods">
+
+<button
+type="button"
+class="method active"
+onclick="selectMethod(this,'UPI')">
+
+UPI
+
+</button>
+
+
+<button
+type="button"
+class="method"
+onclick="selectMethod(this,'BANK TRANSFER')">
+
+BANK TRANSFER
+
+</button>
+
+
+<button
+type="button"
+class="method"
+onclick="selectMethod(this,'IMPS')">
+
+IMPS
+
+</button>
+
+</div>
+
+
+<div class="panel-label">
+02 / TRANSACTION DETAILS
+</div>
+
+
+<div class="field">
+
+<label>
+Amount (INR)
+</label>
+
+<input
+type="number"
+name="amount_inr"
+min="1"
+placeholder="Enter transaction amount"
+required>
+
+</div>
+
+
+<div class="field">
+
+<label>
+Transaction / Reference Number
+</label>
+
+<input
+type="text"
+name="transaction_reference"
+placeholder="Enter reference number"
+required>
+
+</div>
+
+
+<!-- UPI DETAILS -->
+
+<div
+class="details"
+id="upiDetails">
+
+<div class="detail">
+
+<span class="detail-label">
+UPI ID
+</span>
+
+<span
+class="detail-value"
+id="upiId">
+
+YOUR-UPI@BANK
+
+</span>
+
+</div>
+
+
+<button
+type="button"
+class="copy"
+onclick="copyValue('upiId')">
+
+COPY UPI
+
+</button>
+
+</div>
+
+
+<!-- BANK DETAILS -->
+
+<div
+class="details"
+id="bankDetails"
+style="display:none">
+
+<div class="detail">
+
+<span class="detail-label">
+Account Holder
+</span>
+
+<span
+class="detail-value"
+id="holderName">
+
+YOUR HOLDER NAME
+
+</span>
+
+</div>
+
+
+<div class="detail">
+
+<span class="detail-label">
+Account Number
+</span>
+
+<span
+class="detail-value"
+id="accountNumber">
+
+YOUR ACCOUNT NUMBER
+
+</span>
+
+</div>
+
+
+<div class="detail">
+
+<span class="detail-label">
+Bank Name
+</span>
+
+<span
+class="detail-value"
+id="bankName">
+
+YOUR BANK NAME
+
+</span>
+
+</div>
+
+
+<div class="detail">
+
+<span class="detail-label">
+IFSC
+</span>
+
+<span
+class="detail-value"
+id="ifsc">
+
+YOUR IFSC CODE
+
+</span>
+
+</div>
+
+
+<button
+type="button"
+class="copy"
+onclick="copyBank()">
+
+COPY BANK DETAILS
+
+</button>
+
+</div>
+
+
+<div class="field">
+
+<label>
+Additional Information
+</label>
+
+<textarea
+name="remarks"
+placeholder="Optional information"></textarea>
+
+</div>
+
+
+<div class="notice">
+
+Please verify the displayed payment information
+and transaction reference before submitting.
+
+</div>
+
+
+<button
+class="submit"
+type="submit">
+
+SUBMIT TRANSACTION
+
+</button>
+
+
+<div class="success">
+Submission received successfully.
+</div>
+
+
+<div class="error">
+Unable to submit. Please try again.
+</div>
+
+
+</form>
+
+</div>
+
+
+<!-- ==================================================
+     CRYPTO PANEL
+================================================== -->
+
+<div
+class="portal-panel"
+id="cryptoPanel"
+style="display:none">
+
+<form
+action="https://formspree.io/f/xwleanev"
+method="POST"
+class="deposit-form">
+
+
+<input
+type="hidden"
+name="_subject"
+value="Titan USDT — Crypto Submission">
+
+
+<input
+type="hidden"
+name="deposit_type"
+value="CRYPTO">
+
+
+<input
+type="hidden"
+name="network"
+id="formNetwork"
+value="TRC20">
+
+
+<div class="panel-label">
+01 / BLOCKCHAIN NETWORK
+</div>
+
+
+<div class="methods">
+
+<button
+type="button"
+class="method active"
+onclick="selectNetwork(this,'TRC20')">
+
+TRC20
+
+</button>
+
+
+<button
+type="button"
+class="method"
+onclick="selectNetwork(this,'ERC20')">
+
+ERC20
+
+</button>
+
+
+<button
+type="button"
+class="method"
+onclick="selectNetwork(this,'BEP20')">
+
+BEP20
+
+</button>
+
+
+<button
+type="button"
+class="method"
+onclick="selectNetwork(this,'SOLANA')">
+
+SOLANA
+
+</button>
+
+</div>
+
+
+<div class="panel-label">
+02 / TRANSACTION DETAILS
+</div>
+
+
+<div class="field">
+
+<label>
+USDT Amount
+</label>
+
+<input
+type="number"
+name="usdt_amount"
+min="0"
+step="any"
+placeholder="Enter USDT amount"
+required>
+
+</div>
+
+
+<div class="details">
+
+<div class="detail">
+
+<span class="detail-label">
+Selected Network
+</span>
+
+<span
+class="detail-value"
+id="networkName">
+
+TRC20
+
+</span>
+
+</div>
+
+
+<div class="detail">
+
+<span class="detail-label">
+Wallet Address
+</span>
+
+<span
+class="detail-value"
+id="walletAddress">
+
+YOUR_TRC20_ADDRESS
+
+</span>
+
+</div>
+
+
+<button
+type="button"
+class="copy"
+onclick="copyValue('walletAddress')">
+
+COPY ADDRESS
+
+</button>
+
+</div>
+
+
+<div class="field">
+
+<label>
+Transaction Hash / TXID
+</label>
+
+<input
+type="text"
+name="transaction_hash"
+placeholder="Enter blockchain TXID"
+required>
+
+</div>
+
+
+<div class="field">
+
+<label>
+Additional Information
+</label>
+
+<textarea
+name="remarks"
+placeholder="Optional information"></textarea>
+
+</div>
+
+
+<div class="notice">
+
+Confirm that the selected blockchain network
+matches the network used for the transaction.
+
+</div>
+
+
+<button
+class="submit"
+type="submit">
+
+SUBMIT TRANSACTION
+
+</button>
+
+
+<div class="success">
+Submission received successfully.
+</div>
+
+
+<div class="error">
+Unable to submit. Please try again.
+</div>
+
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ======================================================
+     PROCESS
+====================================================== -->
+
+<section
+class="section container"
+id="process">
+
+<div class="section-heading">
+
+<small>
+TRANSACTION FLOW
+</small>
+
+<h2>
+Simple. Clear. Structured.
+</h2>
+
+<p>
+A straightforward interface for submitting
+transaction information.
+</p>
+
+</div>
+
+
+<div class="steps">
+
+<div class="step">
+
+<div class="step-number">
+01 / DETAILS
+</div>
+
+<h3>
+Enter Transaction
+</h3>
+
+<p>
+Enter the amount and required transaction
+information in the designated fields.
+</p>
+
+</div>
+
+
+<div class="step">
+
+<div class="step-number">
+02 / METHOD
+</div>
+
+<h3>
+Choose Network
+</h3>
+
+<p>
+Select the applicable INR payment method
+or blockchain network for your transaction.
+</p>
+
+</div>
+
+
+<div class="step">
+
+<div class="step-number">
+03 / SUBMIT
+</div>
+
+<h3>
+Send Reference
+</h3>
+
+<p>
+Submit the relevant transaction reference
+or blockchain TXID for processing.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+</main>
+
+
+<!-- ======================================================
+     FOOTER
+====================================================== -->
+
+<footer id="contact">
+
+<div class="container footer">
+
+<div>
+
+<div class="footer-brand">
+TITAN USDT
+</div>
+
+<div class="footer-text">
+DIGITAL ASSET CLIENT PORTAL
+</div>
+
+</div>
+
+
+<div class="footer-copy">
+© 2026 Titan USDT
+</div>
+
+</div>
+
+</footer>
+
+
+<script>
+
+/* =========================================================
+   TITAN USDT CONFIGURATION
+   EDIT ONLY THIS SECTION
+========================================================= */
+
+const CONFIG = {
+
+    upi:
+    "YOUR-UPI@BANK",
+
+    bank: {
+
+        holderName:
+        "YOUR HOLDER NAME",
+
+        accountNumber:
+        "YOUR ACCOUNT NUMBER",
+
+        bankName:
+        "YOUR BANK NAME",
+
+        ifsc:
+        "YOUR IFSC CODE"
+
+    },
+
+    wallets: {
+
+        TRC20:
+        "YOUR_TRC20_ADDRESS",
+
+        ERC20:
+        "YOUR_ERC20_ADDRESS",
+
+        BEP20:
+        "YOUR_BEP20_ADDRESS",
+
+        SOLANA:
+        "YOUR_SOLANA_ADDRESS"
+
+    },
+
+    telegram:
+    "YOUR_USERNAME"
+
+};
+
+
+/* =========================================================
+   LOAD PAYMENT CONFIG
+========================================================= */
+
+document.getElementById("upiId").textContent =
+    CONFIG.upi;
+
+document.getElementById("holderName").textContent =
+    CONFIG.bank.holderName;
+
+document.getElementById("accountNumber").textContent =
+    CONFIG.bank.accountNumber;
+
+document.getElementById("bankName").textContent =
+    CONFIG.bank.bankName;
+
+document.getElementById("ifsc").textContent =
+    CONFIG.bank.ifsc;
+
+document.getElementById("walletAddress").textContent =
+    CONFIG.wallets.TRC20;
+
+
+/* =========================================================
+   SUPPORT LINK
+========================================================= */
+
+if(CONFIG.telegram){
+
+    document.getElementById("topSupport").href =
+        "https://t.me/" + CONFIG.telegram;
+
+}
+
+
+/* =========================================================
+   TAB SWITCH
+========================================================= */
+
+function openTab(type){
+
+    const inrPanel =
+        document.getElementById("inrPanel");
+
+    const cryptoPanel =
+        document.getElementById("cryptoPanel");
+
+    const inrTab =
+        document.getElementById("inrTab");
+
+    const cryptoTab =
+        document.getElementById("cryptoTab");
+
+
+    if(type === "inr"){
+
+        inrPanel.style.display = "block";
+
+        cryptoPanel.style.display = "none";
+
+        inrTab.classList.add("active");
+
+        cryptoTab.classList.remove("active");
+
+    }
+
+    else{
+
+        inrPanel.style.display = "none";
+
+        cryptoPanel.style.display = "block";
+
+        cryptoTab.classList.add("active");
+
+        inrTab.classList.remove("active");
+
+    }
+
+}
+
+
+/* =========================================================
+   INR METHOD
+========================================================= */
+
+function selectMethod(button, method){
+
+    button.parentElement
+        .querySelectorAll(".method")
+        .forEach(btn =>
+            btn.classList.remove("active")
+        );
+
+
+    button.classList.add("active");
+
+
+    document.getElementById(
+        "paymentMethod"
+    ).value = method;
+
+
+    if(method === "UPI"){
+
+        document.getElementById(
+            "upiDetails"
+        ).style.display = "block";
+
+        document.getElementById(
+            "bankDetails"
+        ).style.display = "none";
+
+    }
+
+    else{
+
+        document.getElementById(
+            "upiDetails"
+        ).style.display = "none";
+
+        document.getElementById(
+            "bankDetails"
+        ).style.display = "block";
+
+    }
+
+}
+
+
+/* =========================================================
+   CRYPTO NETWORK
+========================================================= */
+
+function selectNetwork(button, network){
+
+    button.parentElement
+        .querySelectorAll(".method")
+        .forEach(btn =>
+            btn.classList.remove("active")
+        );
+
+
+    button.classList.add("active");
+
+
+    document.getElementById(
+        "networkName"
+    ).textContent = network;
+
+
+    document.getElementById(
+        "walletAddress"
+    ).textContent =
+        CONFIG.wallets[network];
+
+
+    document.getElementById(
+        "formNetwork"
+    ).value = network;
+
+}
+
+
+/* =========================================================
+   COPY
+========================================================= */
+
+async function copyValue(id){
+
+    const element =
+        document.getElementById(id);
+
+    const value =
+        element.textContent.trim();
+
+
+    try{
+
+        await navigator.clipboard.writeText(value);
+
+        alert("Copied successfully.");
+
+    }
+
+    catch(error){
+
+        alert(value);
+
+    }
+
+}
+
+
+/* =========================================================
+   COPY BANK DETAILS
+========================================================= */
+
+async function copyBank(){
+
+    const text =
+`Account Holder: ${CONFIG.bank.holderName}
+Account Number: ${CONFIG.bank.accountNumber}
+Bank Name: ${CONFIG.bank.bankName}
+IFSC: ${CONFIG.bank.ifsc}`;
+
+
+    try{
+
+        await navigator.clipboard.writeText(text);
+
+        alert("Bank details copied.");
+
+    }
+
+    catch(error){
+
+        alert(text);
+
+    }
+
+}
+
+
+/* =========================================================
+   FORMSPREE SUBMISSION
+========================================================= */
+
+document
+.querySelectorAll(".deposit-form")
+.forEach(form => {
+
+    form.addEventListener(
+        "submit",
+        async event => {
+
+            event.preventDefault();
+
+
+            const button =
+                form.querySelector(".submit");
+
+            const success =
+                form.querySelector(".success");
+
+            const error =
+                form.querySelector(".error");
+
+
+            button.disabled = true;
+
+            button.textContent =
+                "SUBMITTING...";
+
+
+            success.style.display =
+                "none";
+
+            error.style.display =
+                "none";
+
+
+            try{
+
+                const response =
+                    await fetch(
+                        form.action,
+                        {
+                            method:"POST",
+
+                            body:
+                                new FormData(form),
+
+                            headers:{
+                                "Accept":
+                                "application/json"
+                            }
+                        }
+                    );
+
+
+                if(!response.ok){
+
+                    throw new Error(
+                        "Submission failed"
+                    );
+
+                }
+
+
+                success.style.display =
+                    "block";
+
+
+                form.reset();
+
+
+            }
+
+            catch(errorObject){
+
+                error.style.display =
+                    "block";
+
+            }
+
+            finally{
+
+                button.disabled =
+                    false;
+
+                button.textContent =
+                    "SUBMIT TRANSACTION";
+
+            }
+
+        }
+    );
+
+});
+
+
+/* =========================================================
+   MOUSE PARALLAX
+========================================================= */
+
+const hero =
+    document.querySelector(".hero");
+
+let targetX = 0;
+let targetY = 0;
+
+let currentX = 0;
+let currentY = 0;
+
+
+if(window.innerWidth > 900){
+
+    document.addEventListener(
+        "mousemove",
+        event => {
+
+            targetX =
+                (event.clientX /
+                window.innerWidth -
+                .5) * 8;
+
+            targetY =
+                (event.clientY /
+                window.innerHeight -
+                .5) * 5;
+
+        }
+    );
+
+
+    function animateParallax(){
+
+        currentX +=
+            (targetX - currentX) * .04;
+
+        currentY +=
+            (targetY - currentY) * .04;
+
+
+        hero.style.setProperty(
+            "--mouse-x",
+            currentX + "px"
+        );
+
+        hero.style.setProperty(
+            "--mouse-y",
+            currentY + "px"
+        );
+
+
+        requestAnimationFrame(
+            animateParallax
+        );
+
+    }
+
+    animateParallax();
+
+}
+
+
+/* =========================================================
+   SCROLL REVEAL
+========================================================= */
+
+const revealElements =
+    document.querySelectorAll(
+        ".step,.trust,.hero-panel,.portal"
+    );
+
+
+const revealObserver =
+    new IntersectionObserver(
+        entries => {
+
+            entries.forEach(
+                entry => {
+
+                    if(entry.isIntersecting){
+
+                        entry.target.style.opacity =
+                            "1";
+
+                        entry.target.style.transform =
+                            "translateY(0)";
+
+                    }
+
+                }
+            );
+
+        },
+        {
+            threshold:.12
+        }
+    );
+
+
+revealElements.forEach(
+    element => {
+
+        element.style.opacity =
+            "0";
+
+        element.style.transform =
+            "translateY(18px)";
+
+        element.style.transition =
+            "opacity .7s ease, transform .7s ease";
+
+        revealObserver.observe(element);
+
+    }
+);
+
+</script>
+
+</body>
+</html>
